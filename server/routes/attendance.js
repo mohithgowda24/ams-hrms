@@ -5,7 +5,7 @@ const Employee = require("../models/Employee");
 const router = express.Router();
 
 /* =========================================
-   EMPLOYEE VIEW (must be FIRST)
+   EMPLOYEE — View full attendance history
 ========================================= */
 router.get("/employee/:employeeId", async (req, res) => {
   try {
@@ -19,44 +19,61 @@ router.get("/employee/:employeeId", async (req, res) => {
 });
 
 /* =========================================
-   ADMIN — GET ATTENDANCE BY DATE
+   EMPLOYEE — Monthly attendance
+   Example: /api/attendance/employee/ID/month/2026-01
 ========================================= */
-router.get("/:date", async (req, res) => {
+router.get("/employee/:employeeId/month/:month", async (req, res) => {
   try {
-    const date = req.params.date;
-    const employees = await Employee.find({ status: "Active" });
-    const records = await Attendance.find({ date });
+    const { employeeId, month } = req.params;
 
-    const data = employees.map(e => {
-      const rec = records.find(r => r.employeeId.toString() === e._id.toString());
-      return {
-        employeeId: e._id,
-        name: e.name,
-        status: rec ? rec.status : "Absent"
-      };
-    });
+    const start = new Date(`${month}-01`);
+    const end = new Date(`${month}-31`);
+
+    const data = await Attendance.find({
+      employeeId,
+      date: { $gte: start, $lte: end }
+    }).sort({ date: 1 });
 
     res.json(data);
   } catch (err) {
-    console.error("Admin attendance error:", err);
+    console.error("Monthly attendance error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
 
 /* =========================================
-   ADMIN — MARK ATTENDANCE
+   ADMIN — View today attendance
 ========================================= */
-router.post("/", async (req, res) => {
+router.get("/today", async (req, res) => {
   try {
-    const { employeeId, date, status } = req.body;
+    const today = new Date().toISOString().split("T")[0];
 
-    await Attendance.findOneAndUpdate(
-      { employeeId, date },
-      { status },
-      { upsert: true }
-    );
+    const data = await Attendance.find({ date: today });
+    res.json(data);
+  } catch (err) {
+    console.error("Today attendance error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
-    res.json({ message: "Attendance updated" });
+/* =========================================
+   ADMIN — Mark attendance
+========================================= */
+router.post("/mark", async (req, res) => {
+  try {
+    const { employeeId, status } = req.body;
+    const today = new Date().toISOString().split("T")[0];
+
+    let record = await Attendance.findOne({ employeeId, date: today });
+
+    if (record) {
+      record.status = status;
+      await record.save();
+    } else {
+      await Attendance.create({ employeeId, date: today, status });
+    }
+
+    res.json({ message: "Attendance saved" });
   } catch (err) {
     console.error("Mark attendance error:", err);
     res.status(500).json({ message: "Server error" });

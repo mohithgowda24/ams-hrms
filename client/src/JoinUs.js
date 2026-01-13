@@ -2,13 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function JoinUs() {
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    role: ""
-  });
-
+  const [form, setForm] = useState({ name: "", phone: "", email: "", role: "" });
   const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
@@ -16,58 +10,101 @@ export default function JoinUs() {
   };
 
   const submit = async () => {
-    if (!form.name || !form.phone) {
-      alert("Name and phone are required");
-      return;
+    try {
+      await axios.post("https://ams-backend-yhuh.onrender.com/api/join-us", form);
+      setSuccess(true);
+    } catch {
+      alert("Something went wrong. Please try again.");
     }
-
-    await axios.post("https://ams-backend-yhuh.onrender.com/api/join-us", form);
-    setSuccess(true);
-    setForm({ name: "", phone: "", email: "", role: "" });
   };
 
-  return (
-    <div style={{ minHeight: "100vh", background: "linear-gradient(120deg,#020617,#0f172a)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div style={{ background: "#0f172a", padding: "50px", borderRadius: "20px", width: "420px", color: "white", boxShadow: "0 0 40px rgba(249,115,22,0.3)" }}>
-        <h2 style={{ color: "#f97316", textAlign: "center" }}>Join Adithya Manpower Services</h2>
+  if (success) {
+    return (
+      <div style={successStyle}>
+        <h1 style={{ color: "#22c55e" }}>Registration Successful</h1>
+        <p style={{ marginTop: 20, fontSize: 18 }}>
+          Thank you for registering with <b>Adithya Manpower Services</b>.
+        </p>
+        <p style={{ color: "#cbd5e1", marginTop: 10 }}>
+          Our HR team will contact you within <b>24 hours</b>.
+        </p>
 
-        {success ? (
-          <p style={{ color: "#22c55e", textAlign: "center", marginTop: "30px" }}>
-            Thank you! We will contact you soon.
-          </p>
-        ) : (
-          <>
-            <input name="name" placeholder="Full Name" value={form.name} onChange={handleChange} style={input} />
-            <input name="phone" placeholder="Mobile Number" value={form.phone} onChange={handleChange} style={input} />
-            <input name="email" placeholder="Email (optional)" value={form.email} onChange={handleChange} style={input} />
-            <input name="role" placeholder="Job Role (optional)" value={form.role} onChange={handleChange} style={input} />
+        <div style={contactBox}>
+          <p>📞 <b>9071688231</b></p>
+          <p>🕘 Office Hours: Mon – Sat | 9am – 6pm</p>
 
-            <button onClick={submit} style={btn}>Apply Now</button>
-          </>
-        )}
+          <a
+            href="https://wa.me/919071688231"
+            target="_blank"
+            rel="noreferrer"
+            style={whatsappBtn}
+          >
+            💬 Chat with HR on WhatsApp
+          </a>
+        </div>
       </div>
+    );
+  }
+
+  return (
+    <div style={container}>
+      <h2 style={{ color: "#f97316" }}>Join Adithya Manpower Services</h2>
+
+      <input name="name" placeholder="Full Name" onChange={handleChange} />
+      <input name="phone" placeholder="Mobile Number" onChange={handleChange} />
+      <input name="email" placeholder="Email (optional)" onChange={handleChange} />
+      <input name="role" placeholder="Job Role" onChange={handleChange} />
+
+      <button onClick={submit} style={btn}>Submit</button>
     </div>
   );
 }
 
-const input = {
-  width: "100%",
-  padding: "14px",
-  marginTop: "18px",
-  background: "#020617",
-  border: "1px solid #1e293b",
-  borderRadius: "10px",
-  color: "white"
+const container = {
+  minHeight: "100vh",
+  background: "linear-gradient(120deg,#020617,#0f172a)",
+  color: "white",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "15px"
 };
 
 const btn = {
-  width: "100%",
-  marginTop: "30px",
-  padding: "14px",
   background: "#f97316",
+  padding: "12px 40px",
+  borderRadius: "10px",
   border: "none",
-  borderRadius: "12px",
-  cursor: "pointer",
-  boxShadow: "0 0 30px rgba(249,115,22,0.5)"
+  cursor: "pointer"
+};
+
+const successStyle = {
+  minHeight: "100vh",
+  background: "linear-gradient(120deg,#020617,#0f172a)",
+  color: "white",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  textAlign: "center"
+};
+
+const contactBox = {
+  marginTop: 30,
+  padding: 30,
+  background: "#0f172a",
+  borderRadius: 15
+};
+
+const whatsappBtn = {
+  display: "inline-block",
+  marginTop: 20,
+  padding: "12px 30px",
+  background: "#22c55e",
+  color: "black",
+  borderRadius: 10,
+  textDecoration: "none",
+  fontWeight: "bold"
 };
 
