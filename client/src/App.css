@@ -1,0 +1,46 @@
+/* Base */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #020617;
+}
+
+/* AMS Buttons */
+.btn-primary {
+  padding: 14px 32px;
+  background: #f97316;
+  border: none;
+  color: #020617;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: #fb923c;
+}
+
+.btn-outline {
+  padding: 14px 32px;
+  border: 2px solid #f97316;
+  background: transparent;
+  color: #f97316;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-outline:hover {
+  background: #f97316;
+  color: #020617;
+}
+
+/* Dashboard Cards */
+.dash-card {
+  background: #0f172a;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(249,115,22,0.15);
+}
