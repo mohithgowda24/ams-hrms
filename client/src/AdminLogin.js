@@ -10,7 +10,7 @@ export default function AdminLogin() {
 
   const login = async () => {
     try {
-      const res = await axios.post("http://localhost:4000/api/admin/login", {
+      const res = await axios.post("https://ams-backend-yhuh.onrender.com/api/admin/login", {
         email,
         password
       });

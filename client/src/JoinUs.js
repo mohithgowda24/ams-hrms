@@ -21,7 +21,7 @@ export default function JoinUs() {
       return;
     }
 
-    await axios.post("http://localhost:4000/api/join-us", form);
+    await axios.post("https://ams-backend-yhuh.onrender.com/api/join-us", form);
     setSuccess(true);
     setForm({ name: "", phone: "", email: "", role: "" });
   };

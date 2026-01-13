@@ -6,7 +6,7 @@ export default function JoinUsPopup() {
   const [form, setForm] = useState({ name: "", phone: "", email: "" });
 
   const submit = async () => {
-    await axios.post("http://localhost:4000/api/join-us", form);
+    await axios.post("https://ams-backend-yhuh.onrender.com/api/join-us", form);
     alert("We will contact you soon");
     setOpen(false);
   };

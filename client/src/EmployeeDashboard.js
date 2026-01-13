@@ -29,7 +29,7 @@ export default function EmployeeDashboard() {
     if (!employee) return;
 
     axios
-      .get(`http://localhost:4000/api/attendance/employee/${employee._id}`)
+      .get(`https://ams-backend-yhuh.onrender.com/api/attendance/employee/${employee._id}`)
       .then(res => setAttendance(res.data))
       .catch(() => {});
   }, [employee]);

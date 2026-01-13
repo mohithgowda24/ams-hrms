@@ -28,7 +28,7 @@ export default function Recruit() {
   const fetchJoinees = useCallback(async () => {
     if (!employeeId) return;
     try {
-      const res = await axios.get(`http://localhost:4000/api/joinees/${employeeId}`);
+      const res = await axios.get(`https://ams-backend-yhuh.onrender.com/api/joinees/${employeeId}`);
       setJoinees(res.data);
     } catch {}
   }, [employeeId]);
@@ -47,7 +47,7 @@ export default function Recruit() {
 
   const submitJoinee = async () => {
     try {
-      await axios.post("http://localhost:4000/api/joinees", {
+      await axios.post("https://ams-backend-yhuh.onrender.com/api/joinees", {
         ...form,
         employeeId
       });

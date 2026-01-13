@@ -16,7 +16,7 @@ export default function EmployeeRegister() {
       return;
     }
 
-    await axios.post("http://localhost:4000/api/employee-register/send-otp", {
+    await axios.post("https://ams-backend-yhuh.onrender.com/api/employee-register/send-otp", {
       phone: form.phone
     });
 
@@ -25,7 +25,7 @@ export default function EmployeeRegister() {
   };
 
   const verifyOTP = async () => {
-    await axios.post("http://localhost:4000/api/employee-register/verify-otp", form);
+    await axios.post("https://ams-backend-yhuh.onrender.com/api/employee-register/verify-otp", form);
     alert("Registration complete. Await admin approval.");
   };
 

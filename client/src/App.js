@@ -8,6 +8,7 @@ import AdminLogin from "./AdminLogin";
 import AdminDashboard from "./AdminDashboard";
 import JoinUs from "./JoinUs";
 import EmployeeRegister from "./EmployeeRegister";
+import EmployeeOtpLogin from "./EmployeeOtpLogin";
 
 
 

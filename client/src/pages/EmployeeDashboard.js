@@ -21,7 +21,7 @@ export default function EmployeeDashboard() {
       setEmployee(emp);
 
       // Fetch how many recruits this employee added
-      axios.get(`http://localhost:4000/api/joinees/${emp._id}`)
+      axios.get(`https://ams-backend-yhuh.onrender.com/api/joinees/${emp._id}`)
         .then(res => setRecruitCount(res.data.length))
         .catch(() => {});
     } catch {

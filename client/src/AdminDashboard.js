@@ -13,9 +13,9 @@ export default function AdminDashboard() {
 
   const fetchAll = useCallback(async () => {
     const [r, l, e] = await Promise.all([
-      axios.get("http://localhost:4000/api/joinees"),
-      axios.get("http://localhost:4000/api/join-us"),
-      axios.get("http://localhost:4000/api/admin/employees")
+      axios.get("https://ams-backend-yhuh.onrender.com/api/joinees"),
+      axios.get("https://ams-backend-yhuh.onrender.com/api/join-us"),
+      axios.get("https://ams-backend-yhuh.onrender.com/api/admin/employees")
     ]);
 
     setRecruits(r.data);
@@ -24,7 +24,7 @@ export default function AdminDashboard() {
   }, []);
 
   const fetchAttendance = useCallback(async () => {
-    const res = await axios.get(`http://localhost:4000/api/attendance/${date}`);
+    const res = await axios.get(`https://ams-backend-yhuh.onrender.com/api/attendance/${date}`);
     setAttendance(res.data);
   }, [date]);
 
@@ -43,17 +43,17 @@ export default function AdminDashboard() {
   }, [navigate, fetchAll, fetchAttendance]);
 
   const approve = async (id) => {
-    await axios.put(`http://localhost:4000/api/admin/employees/approve/${id}`);
+    await axios.put(`https://ams-backend-yhuh.onrender.com/api/admin/employees/approve/${id}`);
     fetchAll();
   };
 
   const block = async (id) => {
-    await axios.put(`http://localhost:4000/api/admin/employees/block/${id}`);
+    await axios.put(`https://ams-backend-yhuh.onrender.com/api/admin/employees/block/${id}`);
     fetchAll();
   };
 
   const markAttendance = async (employeeId, status) => {
-    await axios.post("http://localhost:4000/api/attendance", {
+    await axios.post("https://ams-backend-yhuh.onrender.com/api/attendance", {
       employeeId,
       date,
       status
