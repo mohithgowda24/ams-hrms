@@ -1,43 +1,62 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-/* Pages */
-import Home from "./pages/Home";
-import JoinUs from "./JoinUs";
-import EmployeeOtpLogin from "./EmployeeOtpLogin";
-import EmployeeDashboard from "./EmployeeDashboard";
-import Recruit from "./Recruit";
-import AdminLogin from "./AdminLogin";
-import AdminDashboard from "./AdminDashboard";
-import AdminAttendance from "./AdminAttendance";
-import AdminLeads from "./AdminLeads";
-import AdminRecruits from "./AdminRecruits";
-import AdminEmployees from "./AdminEmployees";
+// ================= PUBLIC PAGES =================
+import Home from "./pages/public/Home";
+import JoinUs from "./pages/public/JoinUs";
+import Recruit from "./pages/public/Recruit";
 
-export default function App() {
+// ================= EMPLOYEE PAGES =================
+import EmployeeLogin from "./pages/employee/EmployeeLogin";
+import EmployeeOtpLogin from "./pages/employee/EmployeeOtpLogin";
+import EmployeeRegister from "./pages/employee/EmployeeRegister";
+import EmployeeDashboard from "./pages/employee/EmployeeDashboard";
+import EmployeeProfile from "./pages/employee/EmployeeProfile";
+
+// ================= ADMIN PAGES =================
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminEmployees from "./pages/admin/AdminEmployees";
+import AdminLeads from "./pages/admin/AdminLeads";
+import AdminRecruits from "./pages/admin/AdminRecruits";
+import AdminAttendance from "./pages/admin/AdminAttendance";
+
+// ================= COMMON COMPONENTS =================
+import Navbar from "./Navbar";
+
+function App() {
   return (
     <Router>
-      <Routes>
+      {/* Navbar (can be conditionally hidden later if needed) */}
+      <Navbar />
 
-        {/* Public */}
+      <Routes>
+        {/* ========== PUBLIC ROUTES ========== */}
         <Route path="/" element={<Home />} />
         <Route path="/join-us" element={<JoinUs />} />
-        <Route path="/employee-login" element={<EmployeeOtpLogin />} />
-        <Route path="/admin-login" element={<AdminLogin />} />
-
-        {/* Employee */}
-        <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
         <Route path="/recruit" element={<Recruit />} />
 
-        {/* Admin */}
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/attendance" element={<AdminAttendance />} />
+        {/* ========== EMPLOYEE ROUTES ========== */}
+        <Route path="/employee/login" element={<EmployeeLogin />} />
+        <Route path="/employee/otp" element={<EmployeeOtpLogin />} />
+        <Route path="/employee/register" element={<EmployeeRegister />} />
+        <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
+        <Route path="/employee/profile" element={<EmployeeProfile />} />
+
+        {/* ========== ADMIN ROUTES ========== */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/employees" element={<AdminEmployees />} />
         <Route path="/admin/leads" element={<AdminLeads />} />
         <Route path="/admin/recruits" element={<AdminRecruits />} />
-        <Route path="/admin/employees" element={<AdminEmployees />} />
+        <Route path="/admin/attendance" element={<AdminAttendance />} />
 
+        {/* ========== FALLBACK ROUTE ========== */}
+        <Route path="*" element={<Home />} />
       </Routes>
     </Router>
   );
 }
+
+export default App;
 
